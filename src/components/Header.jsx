@@ -1,7 +1,10 @@
+// src/components/Header.jsx
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 
-function Header() {
+function Header({ userName }) {
+    console.log("Nombre de usuario recibido en Header:", userName); // Verifica el nombre recibido
+
     return (
         <Navbar bg="dark" variant="dark" expand="lg" className="py-3">
             <Container>
@@ -12,6 +15,11 @@ function Header() {
                         <Nav.Link href="#home">Inicio</Nav.Link>
                         <Nav.Link href="#catalog">Catálogo</Nav.Link>
                         <Nav.Link href="#contact">Contacto</Nav.Link>
+                        <NavDropdown title={userName || "Usuario"} id="user-dropdown" align="end">
+                            <NavDropdown.Item href="#profile">Perfil</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#logout">Cerrar sesión</NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
