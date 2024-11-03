@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import * as jwtDecode from 'jwt-decode'; // Importación segura sin default
+import * as jwt_decode from 'jwt-decode'; // Importación sin default
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './components/Login';
@@ -13,18 +13,18 @@ import config from './config';
 const { Content } = Layout;
 
 function App() {
-  const [user, setUser] = useState(null); // Estado de autenticación
-  const [showRegister, setShowRegister] = useState(false); // Controla la vista entre Login y Register
-  const [loading, setLoading] = useState(false); // Estado de carga
+  const [user, setUser] = useState(null);
+  const [showRegister, setShowRegister] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Función para obtener los datos del usuario
   const fetchUserData = async (token) => {
     try {
-      setLoading(true); // Activa la carga
-      const decoded = jwtDecode(token); // Uso directo de jwtDecode
+      setLoading(true);
+
+      // Decodificar el token sin "default" ni errores de sintaxis
+      const decoded = jwt_decode(token);
       const userId = decoded.id;
 
-      // Realiza una solicitud al backend para obtener los datos del usuario
       const response = await axios.get(`${config.API_URL}/api/usuarios/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -33,7 +33,7 @@ function App() {
     } catch (error) {
       console.error("Error al obtener los datos del usuario:", error);
     } finally {
-      setLoading(false); // Desactiva la carga
+      setLoading(false);
     }
   };
 
