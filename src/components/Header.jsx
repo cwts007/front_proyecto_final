@@ -3,6 +3,7 @@ import React from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import logo from '../assets/img/logo_blanco.png'; // Importa el logo
 
 function Header() {
     return (
@@ -10,7 +11,13 @@ function Header() {
             <Navbar expand="lg" sticky="top" className="navbar-custom">
                 <Container>
                     <LinkContainer to="/">
-                        <Navbar.Brand>RepueStock</Navbar.Brand>
+                        <Navbar.Brand>
+                            <img
+                                src={logo}
+                                alt="RepueStock Logo"
+                                style={{ height: '60px' }} // Ajusta la altura según prefieras
+                            />
+                        </Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">

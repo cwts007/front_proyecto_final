@@ -1,6 +1,6 @@
 /* src/index.css */
 
-/* Configuración básica de la estructura */
+/* Configuración básica de la estructura de la página */
 html,
 body,
 #root {
@@ -17,26 +17,32 @@ footer {
     z-index: 1000;
 }
 
+/* Ajuste de la posición del header y footer */
 header {
     top: 0;
-}
-
-.main-content {
-    flex: 1;
-    padding-top: 60px;
-    /* Altura del header */
-    padding-bottom: 40px;
-    /* Altura del footer */
-    overflow-y: auto;
 }
 
 footer {
     bottom: 0;
     font-size: 0.8rem;
     padding: 0.5rem 0;
+    background-color: #001529;
+    /* Azul oscuro */
+    color: white;
+    text-align: center;
 }
 
-/* Estilos personalizados para la Navbar */
+/* Contenido principal con ajuste de espacio para header y footer */
+.main-content {
+    flex: 1;
+    padding-top: 80px;
+    /* Ajustado para la altura del header con el logo de 60px */
+    padding-bottom: 40px;
+    /* Espacio para el footer */
+    overflow-y: auto;
+}
+
+/* Estilos personalizados para el Header/Navbar */
 .navbar-custom {
     background-color: #1890ff !important;
     /* Azul similar a los botones de Ant Design */
@@ -53,7 +59,7 @@ footer {
     /* Color más claro en hover */
 }
 
-/* Estilo para el botón de cerrar sesión en el dropdown */
+/* Estilo para los elementos dentro del dropdown de Cuenta */
 #account-dropdown .dropdown-item {
     color: black !important;
 }
@@ -61,12 +67,4 @@ footer {
 #account-dropdown .dropdown-item:hover {
     color: #1890ff !important;
     background-color: #e6f7ff;
-}
-
-/* Footer estilizado */
-footer {
-    background-color: #001529;
-    /* Azul oscuro */
-    color: white;
-    text-align: center;
 }
