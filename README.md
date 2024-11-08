@@ -1,6 +1,10 @@
 Proyecto Final - Hito 2 - Desarrollo Frontend
 Desafío Latam - Desarrolladores: Cristian Diaz y Christopher Thompson
 
+la pagina se subio a Vercel:
+
+https://repuestock.vercel.app/
+
 Descripción
 Este proyecto corresponde al Hito 2 del proyecto final de Desafío Latam, donde se construyó el frontend de la aplicación con React. El propósito es crear una tienda en línea de repuestos para maquinaria industrial con la capacidad de explorar productos, gestionar el carrito de compras y administrar direcciones de envío.
 
