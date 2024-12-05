@@ -1,28 +1,38 @@
-import React from 'react';
-import { Form, Input, Button, Card, message } from 'antd';
-import { useUser } from '../context/UserContext';
+import React from "react";
+import { Form, Input, Button, Card, message } from "antd";
+import apiClient from "../config";
 
 function Login() {
-  const { login } = useUser();
-
   const onFinish = async (values) => {
     try {
-      await login(values.email, values.password);
-      message.success('Inicio de sesión exitoso');
-      // Redirecciona a otra página si es necesario
+      const response = await apiClient.post("/api/auth/login", values); // Solicitud al backend
+      localStorage.setItem("authToken", response.data.token); // Guardar token en localStorage
+      message.success("Inicio de sesión exitoso");
+      // Redireccionar o manejar la sesión según tu lógica
     } catch (error) {
-      message.error(error.message);
+      message.error("Error al iniciar sesión. Verifica tus credenciales.");
     }
   };
 
+  const onFinishFailed = (errorInfo) => {
+    message.error("Error al completar el formulario.");
+    console.log("Failed:", errorInfo);
+  };
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <Card title="Iniciar Sesión" style={{ width: 300 }}>
-        <Form name="login" onFinish={onFinish} autoComplete="off">
+        <Form
+          name="login"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
           <Form.Item
             label="Correo"
             name="email"
-            rules={[{ required: true, message: 'Por favor ingresa tu correo' }]}
+            rules={[{ required: true, message: "Por favor ingresa tu correo" }]}
           >
             <Input />
           </Form.Item>
@@ -30,13 +40,13 @@ function Login() {
           <Form.Item
             label="Contraseña"
             name="password"
-            rules={[{ required: true, message: 'Por favor ingresa tu contraseña' }]}
+            rules={[{ required: true, message: "Por favor ingresa tu contraseña" }]}
           >
             <Input.Password />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
               Iniciar Sesión
             </Button>
           </Form.Item>
