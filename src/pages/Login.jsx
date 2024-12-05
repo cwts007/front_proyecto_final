@@ -1,27 +1,24 @@
-// src/pages/Login.jsx
 import React from 'react';
-import { Form, Input, Button, Card } from 'antd';
+import { Form, Input, Button, Card, message } from 'antd';
+import { useUser } from '../context/UserContext';
 
 function Login() {
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    // Aquí puedes añadir la lógica para autenticar al usuario
-  };
+  const { login } = useUser();
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+  const onFinish = async (values) => {
+    try {
+      await login(values.email, values.password);
+      message.success('Inicio de sesión exitoso');
+      // Redirecciona a otra página si es necesario
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Card title="Iniciar Sesión" style={{ width: 300 }}>
-        <Form
-          name="login"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
+        <Form name="login" onFinish={onFinish} autoComplete="off">
           <Form.Item
             label="Correo"
             name="email"

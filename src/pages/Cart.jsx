@@ -1,28 +1,32 @@
-// src/pages/Cart.jsx
-import React, { useState } from 'react';
-import { List, Card, Typography, Button } from 'antd';
-import CartItem from '../components/CartItem'; // Importamos CartItem
+import React, { useEffect, useState } from 'react';
+import { List, Card, Typography, Button, message } from 'antd';
+import axios from 'axios';
+import config from '../config';
+import CartItem from '../components/CartItem';
 
 const { Text, Title } = Typography;
 
 function Cart() {
-    const [items, setItems] = useState([
-        { id: 1, name: 'Producto 1', price: 100, quantity: 1 },
-        { id: 2, name: 'Producto 2', price: 150, quantity: 1 },
-        { id: 3, name: 'Producto 3', price: 200, quantity: 1 }
-    ]);
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const handleQuantityChange = (value, itemId) => {
-        setItems(items.map(item =>
-            item.id === itemId ? { ...item, quantity: value } : item
-        ));
-    };
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const token = localStorage.getItem('authToken');
+                const { data } = await axios.get(`${config.backendUrl}/api/cart`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setItems(data);
+            } catch (error) {
+                message.error('Error al cargar el carrito');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const handleRemove = (itemId) => {
-        setItems(items.filter(item => item.id !== itemId));
-    };
-
-    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        fetchCart();
+    }, []);
 
     return (
         <div style={{ padding: '20px' }}>
@@ -30,20 +34,15 @@ function Cart() {
             <List
                 itemLayout="horizontal"
                 dataSource={items}
-                renderItem={item => (
+                loading={loading}
+                renderItem={(item) => (
                     <CartItem
                         item={item}
-                        onQuantityChange={handleQuantityChange}
-                        onRemove={handleRemove}
+                        onQuantityChange={(value) => console.log('Cambio de cantidad', value)}
+                        onRemove={() => console.log('Eliminar producto')}
                     />
                 )}
             />
-            <Card style={{ marginTop: '20px', textAlign: 'right' }}>
-                <Text strong style={{ fontSize: '18px' }}>Total: ${total}</Text>
-                <div style={{ marginTop: '10px' }}>
-                    <Button type="primary" style={{ width: '100%' }}>Proceder al Pago</Button>
-                </div>
-            </Card>
         </div>
     );
 }

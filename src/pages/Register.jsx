@@ -1,27 +1,24 @@
-// src/pages/Register.jsx
 import React from 'react';
 import { Form, Input, Button, Card, message } from 'antd';
+import { useUser } from '../context/UserContext';
 
 function Register() {
-    const onFinish = (values) => {
-        message.success('Formulario de registro enviado con éxito');
-        console.log('Valores enviados:', values);
-    };
+    const { register } = useUser();
 
-    const onFinishFailed = (errorInfo) => {
-        message.error('Error en el formulario de registro');
-        console.log('Errores:', errorInfo);
+    const onFinish = async (values) => {
+        try {
+            await register(values.name, values.email, values.password);
+            message.success('Registro exitoso');
+            // Redirecciona a otra página si es necesario
+        } catch (error) {
+            message.error(error.message);
+        }
     };
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Card title="Registro de Usuario" style={{ width: 300 }}>
-                <Form
-                    name="register"
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                >
+                <Form name="register" onFinish={onFinish} autoComplete="off">
                     <Form.Item
                         label="Nombre"
                         name="name"
@@ -45,25 +42,6 @@ function Register() {
                         label="Contraseña"
                         name="password"
                         rules={[{ required: true, message: 'Por favor ingresa tu contraseña' }]}
-                    >
-                        <Input.Password />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Confirmar Contraseña"
-                        name="confirm"
-                        dependencies={['password']}
-                        rules={[
-                            { required: true, message: 'Por favor confirma tu contraseña' },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
-                                        return Promise.resolve();
-                                    }
-                                    return Promise.reject(new Error('Las contraseñas no coinciden'));
-                                },
-                            }),
-                        ]}
                     >
                         <Input.Password />
                     </Form.Item>
