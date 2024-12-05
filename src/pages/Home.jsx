@@ -96,7 +96,7 @@ function Home() {
                                 textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)',
                             }}
                         >
-                            <h1 style={{ fontSize: '3em', marginBottom: '0.5em' }}>Tu Almacén de Confianza</h1>
+                            <h1 style={{ fontSize: '3em', marginBottom: '0.5em' }}>Tu bodega de confianza</h1>
                             <p style={{ fontSize: '1.2em', maxWidth: '600px', marginBottom: '1em' }}>
                                 Almacenamos y proveemos repuestos de maquinaria con los más altos estándares de calidad.
                             </p>
@@ -145,7 +145,7 @@ function Home() {
                                 textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)',
                             }}
                         >
-                            <h1 style={{ fontSize: '3em', marginBottom: '0.5em' }}>Alianzas con los Mejores Servicios Técnicos</h1>
+                            <h1 style={{ fontSize: '3em', marginBottom: '0.5em' }}>Alianzas con los mejores Servicios Técnicos</h1>
                             <p style={{ fontSize: '1.2em', maxWidth: '600px', marginBottom: '1em' }}>
                                 Contamos con alianzas estratégicas para ofrecerte los mejores servicios de reparación industrial.
                             </p>
