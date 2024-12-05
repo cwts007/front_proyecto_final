@@ -1,14 +1,17 @@
 import React from "react";
 import { Form, Input, Button, Card, message } from "antd";
-import apiClient from "../config";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import apiClient from "../config"; // Importar cliente Axios
 
 function Login() {
+  const navigate = useNavigate(); // Hook para redirigir al usuario
+
   const onFinish = async (values) => {
     try {
       const response = await apiClient.post("/api/auth/login", values); // Solicitud al backend
       localStorage.setItem("authToken", response.data.token); // Guardar token en localStorage
       message.success("Inicio de sesión exitoso");
-      // Redireccionar o manejar la sesión según tu lógica
+      navigate("/tienda"); // Redirigir a la página de la tienda
     } catch (error) {
       message.error("Error al iniciar sesión. Verifica tus credenciales.");
     }
@@ -16,7 +19,6 @@ function Login() {
 
   const onFinishFailed = (errorInfo) => {
     message.error("Error al completar el formulario.");
-    console.log("Failed:", errorInfo);
   };
 
   return (
