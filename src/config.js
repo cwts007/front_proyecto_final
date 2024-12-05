@@ -1,5 +1,7 @@
-const config = {
-    backendUrl: "https://backrepuestock.vercel.app",
-};
+import axios from "axios";
 
-export default config;
+const apiClient = axios.create({
+    baseURL: "https://backrepuestock.vercel.app", // URL del backend
+});
+
+export default apiClient;
