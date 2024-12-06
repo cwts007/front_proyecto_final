@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../config'; // Asegúrate de que `axios` esté configurado correctamente con la URL base del backend.
+import { apiClient } from '../config'; // Asegúrate de que `axios` esté configurado correctamente con la URL base del backend.
 
 function Profile() {
     const [profile, setProfile] = useState(null);
@@ -11,7 +11,7 @@ function Profile() {
         const token = localStorage.getItem('authToken');
 
         // Realizar la solicitud al backend
-        axios.get('/api/auth/profile', {
+        apiClient.get('/api/auth/profile', {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => {
