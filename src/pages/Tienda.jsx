@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Button, Input, Select, Space, message } from "antd";
 import { useMediaQuery } from "react-responsive";
-import apiClient from "../config"; // Importar configuración de Axios
+import apiClient from "../config"; // Axios configurado con interceptores
 
 const { Search } = Input;
 const { Option } = Select;
@@ -20,7 +20,7 @@ function Tienda() {
                 const response = await apiClient.get("/api/products");
                 const productsWithImages = response.data.map((product) => ({
                     ...product,
-                    imageUrl: getImageUrl(product.type), // Asignar ruta de imagen dinámica
+                    imageUrl: getImageUrl(product.type),
                 }));
                 setProducts(productsWithImages);
             } catch (error) {
@@ -48,7 +48,7 @@ function Tienda() {
         try {
             const response = await apiClient.post("/api/cart", {
                 productId: product.id,
-                quantity: 1, // Cantidad predeterminada
+                quantity: 1,
             });
 
             if (response.status === 201) {
@@ -57,8 +57,12 @@ function Tienda() {
                 throw new Error("Error al agregar el producto al carrito.");
             }
         } catch (error) {
-            message.error("No se pudo agregar el producto al carrito.");
-            console.error(error);
+            if (error.response && error.response.status === 401) {
+                message.error("No estás autenticado. Por favor, inicia sesión.");
+            } else {
+                message.error("Hubo un problema al agregar el producto al carrito.");
+            }
+            console.error("Error:", error);
         }
     };
 
@@ -147,11 +151,6 @@ function Tienda() {
                             style={{ borderRadius: "8px", marginBottom: isMobile ? "10px" : "20px" }}
                         >
                             <Card.Meta title={`${product.name} - ${product.code}`} description={`$${product.price}`} />
-                            <p style={{ marginTop: "10px", fontSize: isMobile ? "0.8em" : "1em" }}>
-                                <strong>Marca:</strong> {product.brand} <br />
-                                <strong>Tipo:</strong> {product.type} <br />
-                                {product.description}
-                            </p>
                             <Button
                                 type="primary"
                                 block
