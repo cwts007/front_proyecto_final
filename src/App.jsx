@@ -57,7 +57,10 @@ function App() {
             path="/tienda"
             element={<Tienda onAddToCart={handleAddToCart} />} // Pasar función de agregar al carrito
           />
-          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route
+            path="/product/:id"
+            element={<ProductDetail onAddToCart={handleAddToCart} />} // Pasar función al detalle del producto
+          />
           <Route
             path="/cart"
             element={

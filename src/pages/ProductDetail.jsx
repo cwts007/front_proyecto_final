@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Para obtener el ID de la URL
+import { useParams } from "react-router-dom";
 import { Card, Button, message } from "antd";
-import apiClient from "../config"; // Axios configurado con interceptores
+import apiClient from "../config";
 
-function ProductDetail() {
+function ProductDetail({ onAddToCart }) {
     const { id } = useParams(); // Obtener el ID del producto desde la URL
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -24,25 +24,12 @@ function ProductDetail() {
         fetchProduct();
     }, [id]);
 
-    const handleAddToCart = async () => {
-        try {
-            const response = await apiClient.post("/api/cart", {
-                productId: product.id,
-                quantity: 1,
-            });
-
-            if (response.status === 201) {
-                message.success(`${product.name} agregado al carrito.`);
-            } else {
-                throw new Error("Error al agregar el producto al carrito.");
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                message.error("No estás autenticado. Por favor, inicia sesión.");
-            } else {
-                message.error("Hubo un problema al agregar el producto al carrito.");
-            }
-            console.error("Error:", error);
+    const handleAddToCart = () => {
+        if (product) {
+            onAddToCart(product); // Pasar el producto al carrito
+            message.success(`${product.name} agregado al carrito.`);
+        } else {
+            message.error("No se pudo agregar el producto al carrito.");
         }
     };
 

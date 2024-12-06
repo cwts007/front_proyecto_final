@@ -73,12 +73,6 @@ function Header() {
                                         <LinkContainer to="/profile">
                                             <NavDropdown.Item>Mi Perfil</NavDropdown.Item>
                                         </LinkContainer>
-                                        <LinkContainer to="/profile/add-address">
-                                            <NavDropdown.Item>Agregar Dirección</NavDropdown.Item>
-                                        </LinkContainer>
-                                        <LinkContainer to="/profile/edit-address">
-                                            <NavDropdown.Item>Editar Dirección</NavDropdown.Item>
-                                        </LinkContainer>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={handleLogout}>
                                             Cerrar Sesión
