@@ -15,6 +15,9 @@ function Header() {
         const token = localStorage.getItem('authToken'); // Verifica si hay token en localStorage
         if (token) {
             // Obtén los datos del usuario autenticado
+
+            console.log('hay token');
+
             const fetchUserProfile = async () => {
                 try {
                     const response = await apiClient.get('/api/auth/profile', {
@@ -32,6 +35,9 @@ function Header() {
             };
             fetchUserProfile();
         } else {
+
+            console.log('no hay token');
+
             setUserName(null); // Restablece el estado si no hay token
         }
     }, []);
