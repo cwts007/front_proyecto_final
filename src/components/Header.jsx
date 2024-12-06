@@ -40,7 +40,7 @@ function Header() {
 
             setUserName(null); // Restablece el estado si no hay token
         }
-    }, []);
+    }, [userName]);
 
     // Manejar el cierre de sesión
     const handleLogout = () => {
