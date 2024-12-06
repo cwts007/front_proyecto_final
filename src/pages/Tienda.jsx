@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Button, Input, Select, Space, message } from "antd";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom"; // Para la navegación
-import apiClient from "../config"; // Axios configurado con interceptores
+import { apiClient } from "../config"; // Axios configurado con interceptores
 
 const { Search } = Input;
 const { Option } = Select;

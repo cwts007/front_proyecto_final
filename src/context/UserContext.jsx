@@ -22,11 +22,8 @@ export function UserProvider({ children }) {
     // Función para registrarse
     const register = async (name, email, password) => {
         try {
-
             console.log(config.backendUrl);
-//            const { data } = await axios.post(`${config.backendUrl}/api/auth/register`, { name, email, password });
-
-            const { data } = await axios.post(`https://backrepuestock.vercel.app/api/auth/register`, { name, email, password });
+            const { data } = await axios.post(`${config.backendUrl}/api/auth/register`, { name, email, password });
             return data;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Error al registrarse');

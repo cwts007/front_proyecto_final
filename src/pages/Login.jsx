@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Card, message } from "antd";
 import { useNavigate } from "react-router-dom"; // Importar useNavigate
-import apiClient from "../config"; // Importar cliente Axios
+import { apiClient } from "../config"; // Importar cliente Axios
 
 function Login() {
   const navigate = useNavigate(); // Hook para redirigir al usuario

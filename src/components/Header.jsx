@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import logo from '../assets/img/logo_blanco.png';
 import { useNavigate } from 'react-router-dom';
-import apiClient from '../config'; // Axios configurado con la URL base
+import { apiClient } from '../config'; // Axios configurado con la URL base
 
 function Header() {
     const [userName, setUserName] = useState(null); // Almacena el nombre del usuario autenticado

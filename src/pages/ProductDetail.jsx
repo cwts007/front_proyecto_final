@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Button, message } from "antd";
-import apiClient from "../config";
+import { apiClient } from "../config";
 
 function ProductDetail({ onAddToCart }) {
     const { id } = useParams(); // Obtener el ID del producto desde la URL
