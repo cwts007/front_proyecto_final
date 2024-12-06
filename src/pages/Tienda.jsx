@@ -18,7 +18,6 @@ function Tienda() {
         const fetchProducts = async () => {
             try {
                 const response = await apiClient.get("/api/products");
-                // Asignar imágenes basadas en el tipo de producto
                 const productsWithImages = response.data.map((product) => ({
                     ...product,
                     imageUrl: getImageUrl(product.type), // Asignar ruta de imagen dinámica
@@ -36,12 +35,31 @@ function Tienda() {
     // Función para asignar imágenes dinámicamente según el tipo de producto
     const getImageUrl = (type) => {
         const images = {
-            Motor: "/r1.png", // Motor: r1.png
-            Electrónico: "/r2.png", // Electrónico: r2.png
-            Resistencia: "/r3.png", // Resistencia: r3.png
-            Mecánico: "/r4.png", // Mecánico: r4.png
+            Motor: "/r1.png",
+            Electrónico: "/r2.png",
+            Resistencia: "/r3.png",
+            Mecánico: "/r4.png",
         };
-        return images[type] || "/r1.png"; // Usar r1.png como imagen por defecto si el tipo no existe
+        return images[type] || "/r1.png";
+    };
+
+    // Función para agregar un producto al carrito
+    const handleAddToCart = async (product) => {
+        try {
+            const response = await apiClient.post("/api/cart", {
+                productId: product.id,
+                quantity: 1, // Cantidad predeterminada
+            });
+
+            if (response.status === 201) {
+                message.success(`${product.name} agregado al carrito.`);
+            } else {
+                throw new Error("Error al agregar el producto al carrito.");
+            }
+        } catch (error) {
+            message.error("No se pudo agregar el producto al carrito.");
+            console.error(error);
+        }
     };
 
     const filteredProducts = products.filter((product) => {
@@ -134,7 +152,12 @@ function Tienda() {
                                 <strong>Tipo:</strong> {product.type} <br />
                                 {product.description}
                             </p>
-                            <Button type="primary" block style={{ marginTop: "10px", fontSize: isMobile ? "0.8em" : "1em" }}>
+                            <Button
+                                type="primary"
+                                block
+                                style={{ marginTop: "10px", fontSize: isMobile ? "0.8em" : "1em" }}
+                                onClick={() => handleAddToCart(product)}
+                            >
                                 Agregar al Carrito
                             </Button>
                         </Card>
