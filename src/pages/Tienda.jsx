@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Button, Input, Select, Space, message } from "antd";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom"; // Para la navegación
 import apiClient from "../config"; // Axios configurado con interceptores
 
 const { Search } = Input;
 const { Option } = Select;
 
-function Tienda() {
+function Tienda({ onAddToCart }) {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedBrand, setSelectedBrand] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
+    const navigate = useNavigate(); // Hook para navegación
 
     // Cargar productos desde el backend
     useEffect(() => {
@@ -43,29 +45,6 @@ function Tienda() {
         return images[type] || "/r1.png";
     };
 
-    // Función para agregar un producto al carrito
-    const handleAddToCart = async (product) => {
-        try {
-            const response = await apiClient.post("/api/cart", {
-                productId: product.id,
-                quantity: 1,
-            });
-
-            if (response.status === 201) {
-                message.success(`${product.name} agregado al carrito.`);
-            } else {
-                throw new Error("Error al agregar el producto al carrito.");
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                message.error("No estás autenticado. Por favor, inicia sesión.");
-            } else {
-                message.error("Hubo un problema al agregar el producto al carrito.");
-            }
-            console.error("Error:", error);
-        }
-    };
-
     const filteredProducts = products.filter((product) => {
         const matchesSearch =
             product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -81,6 +60,11 @@ function Tienda() {
         setSearchTerm("");
         setSelectedBrand(null);
         setSelectedType(null);
+    };
+
+    // Redirigir al detalle del producto
+    const handleViewDetails = (productId) => {
+        navigate(`/product/${productId}`);
     };
 
     return (
@@ -155,9 +139,17 @@ function Tienda() {
                                 type="primary"
                                 block
                                 style={{ marginTop: "10px", fontSize: isMobile ? "0.8em" : "1em" }}
-                                onClick={() => handleAddToCart(product)}
+                                onClick={() => onAddToCart(product)} // Simular agregar al carrito
                             >
                                 Agregar al Carrito
+                            </Button>
+                            <Button
+                                type="default"
+                                block
+                                style={{ marginTop: "10px", fontSize: isMobile ? "0.8em" : "1em" }}
+                                onClick={() => handleViewDetails(product.id)}
+                            >
+                                Ver Detalles
                             </Button>
                         </Card>
                     </Col>
