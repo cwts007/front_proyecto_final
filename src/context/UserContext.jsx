@@ -10,6 +10,9 @@ export function UserProvider({ children }) {
     // Función para iniciar sesión
     const login = async (email, password) => {
         try {
+
+            console.log(config.backendUrl);
+
             const { data } = await axios.post(`${config.backendUrl}/api/auth/login`, { email, password });
             setUser({ email }); // Establece el estado del usuario (puedes extenderlo según la respuesta)
             localStorage.setItem('authToken', data.token); // Guarda el token
