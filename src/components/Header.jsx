@@ -6,7 +6,10 @@ import logo from '../assets/img/logo_blanco.png';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../config'; // Axios configurado con la URL base
 
+import { useUser } from '../context/UserContext';
+
 function Header() {
+    const { user } = useUser();
     const [userName, setUserName] = useState(null); // Almacena el nombre del usuario autenticado
     const navigate = useNavigate();
 
@@ -15,9 +18,6 @@ function Header() {
         const token = localStorage.getItem('authToken'); // Verifica si hay token en localStorage
         if (token) {
             // Obtén los datos del usuario autenticado
-
-            console.log('hay token');
-
             const fetchUserProfile = async () => {
                 try {
                     const response = await apiClient.get('/api/auth/profile', {
@@ -35,12 +35,9 @@ function Header() {
             };
             fetchUserProfile();
         } else {
-
-            console.log('no hay token');
-
             setUserName(null); // Restablece el estado si no hay token
         }
-    }, [userName]);
+    }, [user]);
 
     // Manejar el cierre de sesión
     const handleLogout = () => {
