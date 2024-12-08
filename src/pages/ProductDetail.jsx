@@ -27,7 +27,7 @@ function ProductDetail({ onAddToCart }) {
     const handleAddToCart = () => {
         if (product) {
             onAddToCart(product); // Pasar el producto al carrito
-            message.success(`${product.name} agregado al carrito.`);
+            //message.success(`${product.name} agregado al carrito.`);
         } else {
             message.error("No se pudo agregar el producto al carrito.");
         }
