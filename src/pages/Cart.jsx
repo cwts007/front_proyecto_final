@@ -27,9 +27,9 @@ function Cart({ cartItems, onUpdateCart, onRemoveFromCart }) {
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                     <img
-                                        src={item.product.imageUrl.startsWith("/")
-                                            ? item.product.imageUrl // Usar ruta directa desde `public`
-                                            : `${item.product.imageUrl}`}
+                                        src={item.product.image_url.startsWith("/") // Cambié imageURL por image_url
+                                            ? item.product.image_url // Usar ruta directa desde `public` // Cambié imageURL por image_url
+                                            : `${item.product.image_url}`} // Cambié imageURL por image_url
                                         alt={item.product.name}
                                         style={{ height: '100px', width: '100px', objectFit: 'cover', borderRadius: '8px' }}
                                     />
