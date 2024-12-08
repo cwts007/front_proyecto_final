@@ -5,7 +5,7 @@ import { config } from '../config';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-    const [user, setUser] = useState(null);
+    const [ user, setUser] = useState(null);
 
     // Función para iniciar sesión
     const login = async (email, password) => {

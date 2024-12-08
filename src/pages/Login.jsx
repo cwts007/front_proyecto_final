@@ -3,14 +3,18 @@ import { Form, Input, Button, Card, message } from "antd";
 import { useNavigate } from "react-router-dom"; // Importar useNavigate
 import { apiClient } from "../config"; // Importar cliente Axios
 
+import { useUser } from '../context/UserContext';
+
 function Login() {
   const navigate = useNavigate(); // Hook para redirigir al usuario
+  const { setUser } = useUser();
 
   const onFinish = async (values) => {
     try {
       const response = await apiClient.post("/api/auth/login", values); // Solicitud al backend
       localStorage.setItem("authToken", response.data.token); // Guardar token en localStorage
       message.success("Inicio de sesión exitoso");
+      setUser(response.data); // Actualizar el estado global del usuario
       navigate("/tienda"); // Redirigir a la página de la tienda
     } catch (error) {
       message.error("Error al iniciar sesión. Verifica tus credenciales.");
